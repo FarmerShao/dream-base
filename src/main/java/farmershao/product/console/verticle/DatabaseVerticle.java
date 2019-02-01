@@ -1,7 +1,7 @@
-package farmershao.product.crm.verticle;
+package farmershao.product.console.verticle;
 
-import farmershao.product.crm.dao.DatabaseMapperFactory;
-import farmershao.product.crm.util.PropertiesUtil;
+import farmershao.product.console.dao.DatabaseMapperFactory;
+import farmershao.product.console.util.PropertiesUtil;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.core.AbstractVerticle;

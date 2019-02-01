@@ -1,4 +1,4 @@
-package farmershao.product.crm.common;
+package farmershao.product.console.common;
 
 import io.vertx.core.json.JsonObject;
 
@@ -34,7 +34,7 @@ public enum RespEnum {
     public String toJson(Object result) {
         JsonObject jsonObject = convert2Json();
         if (this == SUCCESS) {
-            jsonObject.put("data", result);
+            jsonObject.put("data", JsonObject.mapFrom(result));
         }
         return jsonObject.toString();
     }

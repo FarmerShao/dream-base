@@ -1,4 +1,4 @@
-package farmershao.product.crm.verticle;
+package farmershao.product.console.verticle;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
@@ -19,9 +19,11 @@ public class MainVerticle extends AbstractVerticle {
     public void start(Future<Void> startFuture) throws Exception {
         log.debug("开始发布MainVerticle");
         vertx
-                .rxDeployVerticle("farmershao.product.crm.verticle.DatabaseVerticle")
+                .rxDeployVerticle("farmershao.product.console.verticle.RedisVerticle")
                 .flatMap(id ->
-                    vertx.rxDeployVerticle("farmershao.product.crm.verticle.HttpServerVerticle", new DeploymentOptions().setInstances(2)))
+                    vertx.rxDeployVerticle("farmershao.product.console.verticle.DatabaseVerticle"))
+                .flatMap(id ->
+                    vertx.rxDeployVerticle("farmershao.product.console.verticle.HttpServerVerticle", new DeploymentOptions().setInstances(2)))
                 .subscribe(id -> startFuture.complete(), startFuture::fail);
     }
 }

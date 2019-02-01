@@ -1,9 +1,10 @@
-package farmershao.product.crm.verticle;
+package farmershao.product.console.verticle;
 
-import farmershao.product.crm.handler.AdminManagerHandler;
-import farmershao.product.crm.util.PropertiesUtil;
+import farmershao.product.console.handler.AdminManagerHandler;
+import farmershao.product.console.util.PropertiesUtil;
 import io.reactivex.Single;
 import io.vertx.core.Future;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.handler.LoggerFormat;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.core.http.HttpServer;
@@ -26,8 +27,10 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-        host = config().getString("http.host","127.0.0.1");
-        port = config().getInteger("http.port", 8089);
+        JsonObject config = PropertiesUtil.loadProperties("application-config.json").getJsonObject("httpServer");
+
+        host = config.getString("host");
+        port = config.getInteger("port");
 
         configTheHttpSever()
                 .subscribe(server -> {

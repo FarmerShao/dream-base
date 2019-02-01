@@ -1,6 +1,6 @@
-package farmershao.product.crm.dao;
+package farmershao.product.console.dao;
 
-import farmershao.product.crm.dao.mapper.AdminManagerMapper;
+import farmershao.product.console.dao.mapper.AdminManagerMapper;
 import io.vertx.reactivex.ext.asyncsql.AsyncSQLClient;
 import org.apache.http.util.Asserts;
 

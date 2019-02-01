@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.verticle>farmershao.product.crm.verticle.MainVerticle</main.verticle>
+        <main.verticle>farmershao.product.console.verticle.MainVerticle</main.verticle>
         <vertx.version>3.5.2</vertx.version>
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.2.3</logback.version>
@@ -34,10 +34,10 @@
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web-api-contract</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-service-proxy</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.vertx</groupId>-->
+            <!--<artifactId>vertx-service-proxy</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-codegen</artifactId>
@@ -47,9 +47,14 @@
             <groupId>io.vertx</groupId>
             <artifactId>vertx-rx-java2</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.vertx</groupId>-->
+            <!--<artifactId>vertx-config</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-config</artifactId>
+            <artifactId>vertx-redis-client</artifactId>
+            <version>3.5.2.CR3</version>
         </dependency>
         <!--  freemarker -->
         <dependency>
@@ -61,7 +66,6 @@
             <groupId>io.vertx</groupId>
             <artifactId>vertx-mysql-postgresql-client</artifactId>
         </dependency>
-
         <!--  logback -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -128,7 +132,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>farmershao.product.crm.Launcher</Main-Class>
+                                        <Main-Class>farmershao.product.console.Launcher</Main-Class>
                                         <Main-Verticle>${main.verticle}</Main-Verticle>
                                     </manifestEntries>
                                 </transformer>

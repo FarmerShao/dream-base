@@ -1,4 +1,4 @@
-package farmershao.product.crm.dao.entity;
+package farmershao.product.console.dao.entity;
 
 import java.util.Date;
 

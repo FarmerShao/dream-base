@@ -1,8 +1,8 @@
-package farmershao.product.crm.handler;
+package farmershao.product.console.handler;
 
-import farmershao.product.crm.common.RespEnum;
-import farmershao.product.crm.dao.DatabaseMapperFactory;
-import farmershao.product.crm.dao.mapper.AdminManagerMapper;
+import farmershao.product.console.common.RespEnum;
+import farmershao.product.console.dao.DatabaseMapperFactory;
+import farmershao.product.console.dao.mapper.AdminManagerMapper;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +32,5 @@ public class AdminManagerHandler {
             log.error("Method [find] error:", e);
             context.response().end(RespEnum.SYSTEM_ERROR.toJson());
         }
-
     }
 }

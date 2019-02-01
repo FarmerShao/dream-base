@@ -1,4 +1,4 @@
-package farmershao.product.crm.util;
+package farmershao.product.console.util;
 
 import io.vertx.core.json.JsonObject;
 import org.slf4j.Logger;
