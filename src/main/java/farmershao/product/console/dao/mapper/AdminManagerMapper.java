@@ -1,12 +1,9 @@
 package farmershao.product.console.dao.mapper;
 
 import farmershao.product.console.dao.entity.AdminManager;
-import farmershao.product.console.verticle.DatabaseVerticle;
 import farmershao.product.console.verticle.RedisVerticle;
 import io.reactivex.Single;
-import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
-import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.core.impl.AsyncResultSingle;
@@ -16,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static farmershao.product.console.common.CacheKeyEnum.ADMIN_MANAGER;
+import static farmershao.product.console.common.CacheKeyEnum.*;
 import static farmershao.product.console.verticle.RedisVerticle.redisClient;
 
 /**
@@ -57,6 +54,34 @@ public class AdminManagerMapper {
                                 });
                     } else {
                         log.debug("cache hit [find : {}]", id);
+                        return Single.just(adminManager);
+                    }
+                }) ;
+
+    }
+
+    public Single<AdminManager> findByPhone(String phone) {
+        String cacheKey = ADMIN_MANAGER_PHONE.getKey() + phone;
+        return RedisVerticle
+                .rxGet(cacheKey, AdminManager.class)
+                .flatMap(adminManager -> {
+                    if (adminManager == null) {
+                        return client
+                                .rxQueryWithParams(String.format("select %s from admin_manager where phone = ? limit 1", BASE_SQL), new JsonArray().add(phone))
+                                .flatMap(resultSet -> {
+                                    List<JsonObject> rows = resultSet.getRows();
+                                    AdminManager manager = rows.isEmpty() ? null : rows.get(0).mapTo(AdminManager.class);
+                                    if (manager != null) {
+                                        redisClient
+                                                .rxSet(cacheKey, JsonObject.mapFrom(manager).toString())
+                                                .subscribe();
+                                    }
+                                    return new AsyncResultSingle<>(handler ->
+                                            handler.handle(Future.succeededFuture(manager))
+                                    );
+                                });
+                    } else {
+                        log.debug("cache hit [findByPhone : {}]", phone);
                         return Single.just(adminManager);
                     }
                 }) ;

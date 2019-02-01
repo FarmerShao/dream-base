@@ -9,8 +9,11 @@ import io.vertx.ext.web.handler.LoggerFormat;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.core.http.HttpServer;
 import io.vertx.reactivex.ext.web.Router;
+import io.vertx.reactivex.ext.web.RoutingContext;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
 import io.vertx.reactivex.ext.web.handler.LoggerHandler;
+import io.vertx.reactivex.ext.web.handler.StaticHandler;
+import io.vertx.reactivex.ext.web.templ.FreeMarkerTemplateEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +25,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     private final static Logger log = LoggerFactory.getLogger(HttpServerVerticle.class);
 
+    private FreeMarkerTemplateEngine templateEngine;
+
     private String host;
     private int port;
 
@@ -31,9 +36,10 @@ public class HttpServerVerticle extends AbstractVerticle {
 
         host = config.getString("host");
         port = config.getInteger("port");
-
+        templateEngine = FreeMarkerTemplateEngine.create();
         configTheHttpSever()
                 .subscribe(server -> {
+
                     log.info("HttpServer stared, host:[{}]  port:[{}]", host, port);
                     startFuture.complete();
                 });
@@ -41,21 +47,38 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     private Single<HttpServer> configTheHttpSever() {
         Router router = Router.router(vertx);
-        router.route()
-                .handler(LoggerHandler.create(LoggerFormat.SHORT))
-                .handler(context -> {
-                    context.response().putHeader("Content-Type", "application/json");
-                    context.next();
-                });
-
         router.post().handler(BodyHandler.create());
         router.put().handler(BodyHandler.create());
+        // 处理静态资源
+        router.route("/frontResources/*").handler(StaticHandler.create("/frontResources"));
+        // 请求日志
+        router.route().handler(LoggerHandler.create(LoggerFormat.SHORT));
 
         AdminManagerHandler adminManagerHandler = new AdminManagerHandler();
+
+        router.get("/").handler(this::index);
+        //==== Admin Manager ===
+        router.post("/login").handler(adminManagerHandler::login);
         router.get("/manager/:id").handler(adminManagerHandler::find);
 
         HttpServer httpServer = vertx.createHttpServer().requestHandler(router::accept);
         return httpServer.rxListen(port, host);
     }
+
+    public void index(RoutingContext context) {
+        context.response().putHeader("Content-Type", "text/html");
+        templateEngine
+                .rxRender(context, "views", "/index.ftl")
+                .doOnError(e -> {
+                    log.error("加载首页异常:", e);
+                    templateEngine.render(context, "views", "/404.ftl", ar -> {
+                        if (ar.succeeded()) {
+                            context.response().end(ar.result());
+                        }
+                    });
+                })
+                .subscribe( buffer -> context.response().end(buffer));
+    }
+
 
 }
