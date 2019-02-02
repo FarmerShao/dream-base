@@ -1,6 +1,10 @@
 package farmershao.product.console;
 
+import farmershao.product.console.util.PropertiesUtil;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.VertxOptions;
+import io.vertx.core.json.JsonObject;
+import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 
 /**
  * @author ShaoYu
@@ -18,6 +22,17 @@ public class Launcher extends io.vertx.core.Launcher {
 //                .setClusterHost("127.0.0.1")
 //                .setClusterManager(new ZookeeperClusterManager());
     }
+
+    @Override
+    public void beforeDeployingVerticle(DeploymentOptions deploymentOptions) {
+        super.beforeDeployingVerticle(deploymentOptions);
+
+        if (deploymentOptions.getConfig() == null) {
+            deploymentOptions.setConfig(new JsonObject());
+        }
+        deploymentOptions.getConfig().mergeIn(PropertiesUtil.loadClassPath("application-config.json"));
+    }
+
 
 }
 

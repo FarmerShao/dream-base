@@ -1,7 +1,6 @@
 package farmershao.product.console.verticle;
 
 import farmershao.product.console.util.PropertiesUtil;
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
@@ -25,11 +24,10 @@ public class RedisVerticle extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-        log.info("开始发布RedisVerticle");
-        JsonObject redisConfig = PropertiesUtil.loadProperties("redis-config.json");
-        redisClient = RedisClient.create(vertx, new RedisOptions(redisConfig));
+        log.info("开始发布: RedisVerticle");
+        redisClient = RedisClient.create(vertx, new RedisOptions(config()));
         startFuture.complete();
-        log.info("发布结束RedisVerticle");
+        log.info("发布成功：RedisVerticle");
     }
 
     public static <T> Single<T> rxGet(String key, Class<T> tClass) {

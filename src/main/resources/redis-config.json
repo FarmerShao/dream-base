@@ -1,9 +1,0 @@
-{
-  "host":"localhost",
-  "port":"6379",
-  "encoding":"UTF-8",
-  "tcpKeepAlive":true,
-  "tcpNoDelay":true,
-  "auth":"foobared",
-  "select":0
-}

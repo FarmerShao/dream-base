@@ -3,11 +3,9 @@ package farmershao.product.console.handler;
 import farmershao.product.console.common.RespEnum;
 import farmershao.product.console.dao.DatabaseMapperFactory;
 import farmershao.product.console.dao.mapper.AdminManagerMapper;
-import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.core.http.HttpServerRequest;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.util.Asserts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +19,7 @@ public class AdminManagerHandler {
 
     private AdminManagerMapper adminManagerMapper = DatabaseMapperFactory.getMapper(AdminManagerMapper.class);
 
-    public AdminManagerHandler() {
-    }
+    public AdminManagerHandler() { }
 
     public void find(RoutingContext context) {
         context.response().putHeader("Content-Type", "application/json");

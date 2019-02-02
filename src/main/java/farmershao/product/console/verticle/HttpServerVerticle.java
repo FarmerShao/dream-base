@@ -10,9 +10,10 @@ import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.core.http.HttpServer;
 import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.RoutingContext;
-import io.vertx.reactivex.ext.web.handler.BodyHandler;
-import io.vertx.reactivex.ext.web.handler.LoggerHandler;
-import io.vertx.reactivex.ext.web.handler.StaticHandler;
+import io.vertx.reactivex.ext.web.handler.*;
+import io.vertx.reactivex.ext.web.sstore.ClusteredSessionStore;
+import io.vertx.reactivex.ext.web.sstore.LocalSessionStore;
+import io.vertx.reactivex.ext.web.sstore.SessionStore;
 import io.vertx.reactivex.ext.web.templ.FreeMarkerTemplateEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +33,13 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-        JsonObject config = PropertiesUtil.loadProperties("application-config.json").getJsonObject("httpServer");
-
-        host = config.getString("host");
-        port = config.getInteger("port");
+        log.info("开始发布：HttpServerVerticle");
+        log.info("config :{}", config().toString());
+        host = config().getString("host");
+        port = config().getInteger("port");
         templateEngine = FreeMarkerTemplateEngine.create();
         configTheHttpSever()
                 .subscribe(server -> {
-
                     log.info("HttpServer stared, host:[{}]  port:[{}]", host, port);
                     startFuture.complete();
                 });
@@ -47,12 +47,20 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     private Single<HttpServer> configTheHttpSever() {
         Router router = Router.router(vertx);
+
+        // 使用session之前需配置CookieHandler
+        router.route().handler(CookieHandler.create());
+        // 使用本地存储Session,若需换成集群存储，可以使用 ClusteredSessionStore
+        SessionStore store = LocalSessionStore.create(vertx, "sessionMap");
+        SessionHandler sessionHandler = SessionHandler.create(store);
+        router.route().handler(sessionHandler);
+
         router.post().handler(BodyHandler.create());
         router.put().handler(BodyHandler.create());
         // 处理静态资源
         router.route("/frontResources/*").handler(StaticHandler.create("/frontResources"));
-        // 请求日志
-        router.route().handler(LoggerHandler.create(LoggerFormat.SHORT));
+        // 请求日志(过滤静态文件的路径)
+        router.route().pathRegex("^((?!frontResources).)*$").handler(LoggerHandler.create(LoggerFormat.SHORT));
 
         AdminManagerHandler adminManagerHandler = new AdminManagerHandler();
 

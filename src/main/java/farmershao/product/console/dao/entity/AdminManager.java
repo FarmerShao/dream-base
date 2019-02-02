@@ -9,9 +9,9 @@ import java.util.Date;
 public class AdminManager {
 
     private long id;
-    private String password;
-    private String phone;
-    private Date lastLoginTime;
+    private String password;        // 密码
+    private String phone;           // 手机号（账号）
+    private Date lastLoginTime;     //最后登录时间
 
     public long getId() {
         return id;

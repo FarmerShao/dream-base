@@ -22,10 +22,8 @@ public class DatabaseVerticle extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-        log.info("开始发布DatabaseVerticle");
-        JsonObject sqlConfig = PropertiesUtil.loadProperties("mysql-config.json");
-        client = MySQLClient.createShared(vertx, sqlConfig);
-
+        log.info("开始发布：DatabaseVerticle");
+        client = MySQLClient.createShared(vertx, config());
         // 连接到数据库，检测是否连接正常
         client
                 .rxGetConnection()
