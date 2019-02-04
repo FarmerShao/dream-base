@@ -1,6 +1,7 @@
 package farmershao.product.console.dao;
 
 import farmershao.product.console.dao.mapper.AdminManagerMapper;
+import farmershao.product.console.dao.mapper.CategoryMapper;
 import io.vertx.reactivex.ext.asyncsql.AsyncSQLClient;
 import org.apache.http.util.Asserts;
 
@@ -21,6 +22,7 @@ public class DatabaseMapperFactory {
         Asserts.notNull(client, "AsyncSQLClient");
         synchronized (DatabaseMapperFactory.class) {
             mappers.put(AdminManagerMapper.class, new AdminManagerMapper(client));
+            mappers.put(CategoryMapper.class, new CategoryMapper(client));
         }
     }
 

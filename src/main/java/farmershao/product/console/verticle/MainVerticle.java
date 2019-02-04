@@ -19,20 +19,19 @@ public class MainVerticle extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-
-        log.info("config :{}", config().toString());
         vertx
                 .rxDeployVerticle("farmershao.product.console.verticle.RedisVerticle",
-                        new DeploymentOptions().setConfig(config().getJsonObject("redis")))
+                        new DeploymentOptions()
+                                .setConfig(config().getJsonObject("redis")))
                 .flatMap(id ->
                         vertx.rxDeployVerticle("farmershao.product.console.verticle.DatabaseVerticle",
-                                new DeploymentOptions().setConfig(config().getJsonObject("mysql"))))
+                                new DeploymentOptions()
+                                        .setConfig(config().getJsonObject("mysql"))))
                 .flatMap(id ->
                         vertx.rxDeployVerticle("farmershao.product.console.verticle.HttpServerVerticle",
                                 new DeploymentOptions()
                                         .setInstances(2)
-                                        .setConfig(config().getJsonObject("httpServer")))
-                )
+                                        .setConfig(config().getJsonObject("httpServer"))))
                 .subscribe(id -> startFuture.complete(), startFuture::fail);
     }
 }

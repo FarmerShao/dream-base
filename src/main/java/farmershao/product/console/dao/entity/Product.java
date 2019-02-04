@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
+ * 商品
  * @author ShaoYu
  * @since 2019/2/2 0002 下午 8:46
  */
@@ -12,13 +13,41 @@ public class Product {
     private long id;
     private String name;        // 商品名称
     private BigDecimal price;   // 价格
+
+    private long merchantId;    // 店铺ID
     private long categoryFir;   // 一级目录
     private long categorySec;   // 二级目录
     private long categoryThi;   // 三级目录
+    private String attribute;   // 属性：json字符串
 
     private Date createdAT;     // 创建时间
     private Date updatedAt;     // 修改时间
     private String modifier;    // 修改者账号
+    private boolean deleted;    // 是否删除
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
 
     public Date getCreatedAT() {
         return createdAT;

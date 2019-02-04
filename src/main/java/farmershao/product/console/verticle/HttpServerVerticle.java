@@ -1,6 +1,7 @@
 package farmershao.product.console.verticle;
 
 import farmershao.product.console.handler.AdminManagerHandler;
+import farmershao.product.console.handler.CategoryHandler;
 import farmershao.product.console.util.PropertiesUtil;
 import io.reactivex.Single;
 import io.vertx.core.Future;
@@ -34,7 +35,6 @@ public class HttpServerVerticle extends AbstractVerticle {
     @Override
     public void start(Future<Void> startFuture) throws Exception {
         log.info("开始发布：HttpServerVerticle");
-        log.info("config :{}", config().toString());
         host = config().getString("host");
         port = config().getInteger("port");
         templateEngine = FreeMarkerTemplateEngine.create();
@@ -55,38 +55,65 @@ public class HttpServerVerticle extends AbstractVerticle {
         SessionHandler sessionHandler = SessionHandler.create(store);
         router.route().handler(sessionHandler);
 
-        router.post().handler(BodyHandler.create());
-        router.put().handler(BodyHandler.create());
+        router
+                .post()
+                .handler(BodyHandler.create())
+                .handler(context -> {
+                    context.response().putHeader("Content-Type", "application/json");
+                    context.next();
+                });
+        router
+                .put()
+                .handler(BodyHandler.create())
+                .handler(context -> {
+                    context.response().putHeader("Content-Type", "application/json");
+                    context.next();
+                });
+        router
+                .delete()
+                .handler(context -> {
+                    context.response().putHeader("Content-Type", "application/json");
+                    context.next();
+                });
+
         // 处理静态资源
         router.route("/frontResources/*").handler(StaticHandler.create("/frontResources"));
         // 请求日志(过滤静态文件的路径)
         router.route().pathRegex("^((?!frontResources).)*$").handler(LoggerHandler.create(LoggerFormat.SHORT));
 
-        AdminManagerHandler adminManagerHandler = new AdminManagerHandler();
+        router.get("/loginPage").handler(this::loginPage);
+        router.get("/index").handler(this::index);
 
-        router.get("/").handler(this::index);
-        //==== Admin Manager ===
+        //=== Admin Manager ===
+        AdminManagerHandler adminManagerHandler = new AdminManagerHandler();
         router.post("/login").handler(adminManagerHandler::login);
         router.get("/manager/:id").handler(adminManagerHandler::find);
 
+        //=== category ===
+        CategoryHandler categoryHandler = new CategoryHandler();
+        router.get("/category/:id").handler(categoryHandler::find);
+        router.post("/category").handler(categoryHandler::insert);
+        router.put("/category/:id").handler(categoryHandler::update);
+        router.delete("/category/:id").handler(categoryHandler::delete);
+
         HttpServer httpServer = vertx.createHttpServer().requestHandler(router::accept);
         return httpServer.rxListen(port, host);
+    }
+
+    public void loginPage(RoutingContext context) {
+        context.response().putHeader("Content-Type", "text/html");
+        templateEngine
+                .rxRender(context, "views", "/login.ftl")
+                .subscribe( buffer -> context.response().end(buffer));
     }
 
     public void index(RoutingContext context) {
         context.response().putHeader("Content-Type", "text/html");
         templateEngine
                 .rxRender(context, "views", "/index.ftl")
-                .doOnError(e -> {
-                    log.error("加载首页异常:", e);
-                    templateEngine.render(context, "views", "/404.ftl", ar -> {
-                        if (ar.succeeded()) {
-                            context.response().end(ar.result());
-                        }
-                    });
-                })
                 .subscribe( buffer -> context.response().end(buffer));
     }
+
 
 
 }

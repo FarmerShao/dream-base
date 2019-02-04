@@ -22,7 +22,6 @@ public class AdminManagerHandler {
     public AdminManagerHandler() { }
 
     public void find(RoutingContext context) {
-        context.response().putHeader("Content-Type", "application/json");
         try {
             adminManagerMapper
                     .find(Integer.parseInt(context.pathParam("id")))
@@ -44,7 +43,6 @@ public class AdminManagerHandler {
             context.response().end(RespEnum.PARAM_ERROR.toJson());
             return;
         }
-        context.response().putHeader("Content-Type", "application/json");
         adminManagerMapper
                 .findByPhone(phone)
                 .doOnError(exp -> context.response().end(RespEnum.SYSTEM_ERROR.toJson()))
