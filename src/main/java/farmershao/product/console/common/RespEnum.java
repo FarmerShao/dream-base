@@ -13,6 +13,7 @@ public enum RespEnum {
     PARAM_ERROR(400, "参数异常"),
 
 
+    NO_AUTH(10002, "没有权限访问"),
     ACCOUNT_NOT_FOUND(10000, "账号不存在"),
     PASSWORD_ERROR(10001, "密码错误")
     ;

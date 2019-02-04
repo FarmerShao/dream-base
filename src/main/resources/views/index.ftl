@@ -1,425 +1,327 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Home</title>
+    <!-- Bootstrap Styles-->
+    <link href="${context.domain!}/frontResources/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="${context.domain!}/frontResources/assets/css/font-awesome.css" rel="stylesheet"/>
+    <!-- Morris Chart Styles-->
+    <link href="${context.domain!}/frontResources/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet"/>
+    <!-- Custom Styles-->
+    <link href="${context.domain!}/frontResources/assets/css/custom-styles.css" rel="stylesheet"/>
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-
-    <title>Bootstrap Admin Template </title>
-    <link rel="shortcut icon" href="../frontResources/img/favicon.ico">
-
-    <!-- global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="../frontResources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../frontResources/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../frontResources/css/font-icon-style.css">
-    <link rel="stylesheet" href="../frontResources/css/style.default.css" id="theme-stylesheet">
-
-    <!-- Core stylesheets -->
-    <link rel="stylesheet" href="../frontResources/css/ui-elements/card.css">
-    <link rel="stylesheet" href="../frontResources/css/style.css">
 </head>
 
 <body>
+<div id="wrapper">
 <#include "header.ftl">
+<#include "sideBar.ftl">
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Dashboard
+                        <small>Summary of your App</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Library</a></li>
+                        <li class="active">Data</li>
+                    </ol>
+                </div>
+            </div>
 
-<!--====================================================
-                        PAGE CONTENT
-======================================================-->
-<div class="page-content d-flex align-items-stretch">
-    <#include "sideBar.ftl">
+
+            <!-- /. ROW  -->
+            <div class="tlinks">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-green green">
+                        <div class="panel-left pull-left green">
+                            <i class="fa fa-eye fa-5x"></i>
+
+                        </div>
+                        <div class="panel-right">
+                            <h3>8,457</h3>
+                            <strong> Daily Visits</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-blue">
+                        <div class="panel-left pull-left blue">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+
+                        <div class="panel-right">
+                            <h3>52,160 </h3>
+                            <strong> Sales</strong>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-red">
+                        <div class="panel-left pull-left red">
+                            <i class="fa fa fa-comments fa-5x"></i>
+
+                        </div>
+                        <div class="panel-right">
+                            <h3>15,823 </h3>
+                            <strong> Comments </strong>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-brown">
+                        <div class="panel-left pull-left brown">
+                            <i class="fa fa-users fa-5x"></i>
+
+                        </div>
+                        <div class="panel-right">
+                            <h3>36,752 </h3>
+                            <strong>No. of Visits</strong>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Area Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-area-chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Line Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-line-chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
 
-    <div class="content-inner">
-
-        <!--***** REPORT-1 *****-->
-        <div class="row" id="report1">
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="text-left report1-cont">
-                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i> $9,220</h2>
-                            <span class="text-muted">Todays Income</span>
-                        </div>
-                        <span class="text-success">80%</span>
-                        <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 80%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p><small>Last month 10% Growth</small></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="text-left report1-cont">
-                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-danger"></i> $5,530</h2>
-                            <span class="text-muted">Gross Profit</span>
-                        </div>
-                        <span class="text-danger">43%</span>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 43%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p><small>Last month 10% Growth</small></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="text-left report1-cont">
-                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-warning"></i> $3,620</h2>
-                            <span class="text-muted">Interest Expenses </span>
-                        </div>
-                        <span class="text-warning">53%</span>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 53%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p><small>Last month 10% Growth</small></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="text-left report1-cont">
-                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-info"></i> $82,600</h2>
-                            <span class="text-muted">Net Profit</span>
-                        </div>
-                        <span class="text-info">70%</span>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 70%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p><small>Last month 10% Growth</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--***** REPORT-2 *****-->
-        <div class="row" id="report2">
-            <div class="col-md-4">
-                <div class="card card-c1">
-                    <div class="card-header card-chart" data-background-color="green">
-                        <canvas class="ct-chart" id="myChart1" height="250"></canvas>
-                    </div>
-                    <div class="card-content">
-                        <h4 class="title">Daily Sales</h4>
-                        <p class="category">
-                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="fa fa-clock-o"></i> updated 4 minutes ago
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-c1">
-                    <div class="card-header card-chart" data-background-color="orange">
-                        <canvas class="ct-chart" id="myChart2" height="250"></canvas>
-                    </div>
-                    <div class="card-content">
-                        <h4 class="title">Email Subscriptions</h4>
-                        <p class="category">Last Campaign Performance</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="fa fa-clock-o"></i> campaign sent 2 days ago
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-c1">
-                    <div class="card-header card-chart" data-background-color="red">
-                        <canvas class="ct-chart" id="myChart3" height="250"></canvas>
-                    </div>
-                    <div class="card-content">
-                        <h4 class="title">Completed Tasks</h4>
-                        <p class="category">Last Campaign Performance</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="fa fa-clock-o"></i> campaign sent 2 days ago
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tlinks">Collect from <a href="http://www.cssmoban.com/" >企业网站模板</a></div>
-
-        <!--***** REPORT-3 *****-->
-        <div class="row" id="report3">
-            <div class="col-md-8">
-                <div class="card card-c2">
-                    <table class="table table-hover">
-                        <thead>
-                        <div class="dropdown pull-right menu-sett-card">
-                            <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v men"></i>
-                            </a>
-                            <ul aria-labelledby="notifications" class="dropdown-menu">
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <tr>
-                            <th>Case Study</th>
-                            <th>Target Date</th>
-                            <th>Progress <!-- <i class="fa fa-ellipsis-v pull-right" ></i> -->
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Tech Wireframes</td>
-                            <td>23/03/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mobile Boz</td>
-                            <td>02/06/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%; height:10px;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Reskel Soft</td>
-                            <td>11/02/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 95%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Desan Shop</td>
-                            <td>05/03/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr><tr>
-                            <td>Effel Soft</td>
-                            <td>24/02/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr><tr>
-                            <td>Tech Box</td>
-                            <td>01/09/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr><tr>
-                            <td>Lesto Firm</td>
-                            <td>15/12/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 85%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Technoborn</td>
-                            <td>08/08/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 45%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Redor Books</td>
-                            <td>18/08/2018</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-c2">
-                    <div class="dropdown pull-right menu-sett-card" >
-                        <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v men"></i>
-                        </a>
-                        <ul aria-labelledby="notifications" class="dropdown-menu">
-                            <li>
-                                <a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="header">
-                        <h4 class="title">Email Statistics</h4>
-                        <p class="category">Last Campaign Performance</p>
-                    </div>
-                    <div class="content">
-                        <canvas class="ct-chart" id="polar-chart" height="250"></canvas>
-                        <!-- <canvas class="ct-chart" id="myChart4" height="250"></canvas> -->
-                        <div class="footer">
-                            <div class="legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Bounce
-                                <i class="fa fa-circle text-warning"></i> Unsubscribe
-                            </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>Customers</h4>
+                            <div class="easypiechart" id="easypiechart-blue" data-percent="82"><span
+                                    class="percent">82%</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!--***** REPORT-4 *****-->
-        <div class="row" id="report4">
-            <div class="col-md-4" id="card-1">
-                <div class="card card-inverse card-info">
-                    <img class="card-img-top" src="../frontResources/img/card/c-1.jpg">
-                    <div class="card-block">
-                        <h4 class="card-title">Clean Tech Box </h4>
-                        <div class="card-text">
-                            Lorem Ipsum has been the industry's standard.
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>Sales</h4>
+                            <div class="easypiechart" id="easypiechart-orange" data-percent="55"><span class="percent">55%</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <small>Last updated 3 mins ago</small>
-                        <button class="btn btn-info float-right btn-sm">Follow</button>
-                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 mt-0" id="card-2">
-                <div class="card hovercard">
-                    <div class="cardheader"></div>
-                    <div class="avatar">
-                        <img alt="" src="../frontResources/img/avatar-1.jpg" class="img-fluid">
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            <a target="_blank" href="#">Steena Ben</a>
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>Profits</h4>
+                            <div class="easypiechart" id="easypiechart-teal" data-percent="84"><span
+                                    class="percent">84%</span>
+                            </div>
                         </div>
-                        <div class="desc">Passionate designer</div>
-                        <div class="desc">Curious developer</div>
-                        <div class="desc">Tech geek</div>
-                    </div>
-                    <div class="bottom">
-                        <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        <a class="btn btn-danger btn-sm" rel="publisher"
-                           href="https://plus.google.com/+ahmshahnuralam">
-                            <i class="fa fa-google-plus"></i>
-                        </a>
-                        <a class="btn btn-primary btn-sm" rel="publisher"
-                           href="https://plus.google.com/shahnuralam">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                        <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
-                            <i class="fa fa-behance"></i>
-                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-c2">
-                    <div class="dropdown pull-right menu-sett-card" >
-                        <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v men"></i>
-                        </a>
-                        <ul aria-labelledby="notifications" class="dropdown-menu">
-                            <li>
-                                <a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>
-                            </li>
-                        </ul>
+                <div class="col-xs-6 col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body easypiechart-panel">
+                            <h4>No. of Visits</h4>
+                            <div class="easypiechart" id="easypiechart-red" data-percent="46"><span
+                                    class="percent">46%</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="header">
-                        <h4 class="title">Newsfeed</h4>
-                        <p class="category">Latest News Update</p>
-                        <hr>
-                    </div>
-                    <div class="content newsf-list">
-                        <ul class="list-unstyled">
-                            <li class="border border-primary">
-                                <a rel="nofollow " href="#" class=" d-flex">
-                                    <div class="news-f-img"> <img src="../frontResources/img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                                    <div class="msg-body">
-                                        <h3 class="h5 msg-nav-h3">New Innovation world</h3>
-                                        <small>Tech soft is great innovation for...</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="border border-success">
-                                <a rel="nofollow" href="#" class=" d-flex">
-                                    <div class="news-f-img"> <img src="../frontResources/img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                                    <div class="msg-body">
-                                        <h3 class="h5 msg-nav-h3">Modified hand-cart steering</h3>
-                                        <small>The idea is to incorporate easy...</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="border border-info">
-                                <a rel="nofollow" href="#" class=" d-flex">
-                                    <div class="news-f-img"> <img src="../frontResources/img/avatar-4.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                                    <div class="msg-body">
-                                        <h3 class="h5 msg-nav-h3">Low cost Modern printer</h3>
-                                        <small>A dot matrix printer modified at...</small>
-                                    </div>
-                                </a>
-                            </li>
+                </div>
+            </div><!--/.row-->
 
-                        </ul>
+
+            <div class="row">
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Bar Chart Example
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-bar-chart"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Donut Chart Example
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Tasks Panel
+                        </div>
+                        <div class="panel-body">
+                            <div class="list-group">
+
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">7 minutes ago</span>
+                                    <i class="fa fa-fw fa-comment"></i> Commented on a post
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">16 minutes ago</span>
+                                    <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">36 minutes ago</span>
+                                    <i class="fa fa-fw fa-globe"></i> Invoice 653 has paid
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">1 hour ago</span>
+                                    <i class="fa fa-fw fa-user"></i> A new user has been added
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">1.23 hour ago</span>
+                                    <i class="fa fa-fw fa-user"></i> A new user has added
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">yesterday</span>
+                                    <i class="fa fa-fw fa-globe"></i> Saved the world
+                                </a>
+                            </div>
+                            <div class="text-right">
+                                <a href="#">More Tasks <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Responsive Table Example
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>S No.</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>User Name</th>
+                                        <th>Email ID.</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>John15482</td>
+                                        <td>name@site.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Kimsila</td>
+                                        <td>Marriye</td>
+                                        <td>Kim1425</td>
+                                        <td>name@site.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Rossye</td>
+                                        <td>Nermal</td>
+                                        <td>Rossy1245</td>
+                                        <td>name@site.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Richard</td>
+                                        <td>Orieal</td>
+                                        <td>Rich5685</td>
+                                        <td>name@site.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Jacob</td>
+                                        <td>Hielsar</td>
+                                        <td>Jac4587</td>
+                                        <td>name@site.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Wrapel</td>
+                                        <td>Dere</td>
+                                        <td>Wrap4585</td>
+                                        <td>name@site.com</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <#include "footer.ftl">
         </div>
-        <#include "footer.ftl">
+        <!-- /. PAGE INNER  -->
     </div>
+    <!-- /. PAGE WRAPPER  -->
 </div>
 
-<!--Core Javascript -->
-<script src="../frontResources/js/mychart.js"></script>
+<script src="${context.domain}/frontResources/assets/js/jquery-1.10.2.js"></script>
+<script src="${context.domain}/frontResources/assets/js/bootstrap.min.js"></script>
+<script src="${context.domain}/frontResources/assets/js/jquery.metisMenu.js"></script>
+<script src="${context.domain}/frontResources/assets/js/morris/raphael-2.1.0.min.js"></script>
+<script src="${context.domain}/frontResources/assets/js/morris/morris.js"></script>
+<script src="${context.domain}/frontResources/assets/js/easypiechart.js"></script>
+<script src="${context.domain}/frontResources/assets/js/easypiechart-data.js"></script>
+<script src="${context.domain}/frontResources/assets/js/Lightweight-Chart/jquery.chart.js"></script>
+<script src="${context.domain}/frontResources/assets/js/custom-scripts.js"></script>
 </body>
+
 
 </html>

@@ -11,7 +11,16 @@ public class AdminManager {
     private long id;
     private String password;        // 密码
     private String phone;           // 手机号（账号）
+    private String name;            // 姓名
     private Date lastLoginTime;     //最后登录时间
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;
