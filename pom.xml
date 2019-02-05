@@ -65,7 +65,7 @@
         <!--  shiro -->
         <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-auth-shiro</artifactId>
+            <artifactId>vertx-auth-jwt</artifactId>
         </dependency>
         <!--  freemarker -->
         <dependency>

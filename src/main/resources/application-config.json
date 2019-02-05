@@ -1,7 +1,10 @@
 {
   "httpServer": {
     "host": "localhost",
-    "port": 8080
+    "port": 8080,
+    "algorithm" : "RS256",
+    "issuer" : "FarmerShao",
+    "subject" : "Store API"
   },
   "redis": {
     "host": "localhost",
